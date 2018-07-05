@@ -1,6 +1,6 @@
 ;; @module database_sqlite3
 ;; @description SQLite3 subclass of DF.DB. Only lists Sqlite3 specific functions.
-;; @version 1.2
+;; @version 1.2.1
 ;; @author Greg Slepak 
 ;; @location http://www.taoeffect.com/newlisp/database_sqlite3.lsp.txt
 ;; <h3>Features not found in newLISP's sqlite3.lsp:</h3>
@@ -20,6 +20,7 @@
 ;; <h3>Requirements</h3>
 ;; See module @link http://www.taoeffect.com/newlisp/database.lsp.html DF.DB for requirements.
 ;; <h3>Version history</h3>
+;; <b>1.2.1</b> &bull; Alpine linux support
 ;; <b>1.2.0</b> &bull; temporary fix for handling of floats, sqlite3 functions globally for speed, binding 'true' is handled as 1
 ;; <b>1.1.2</b> &bull; fixed a bug in 'get-string-cast' and implemented 'DF.SQL:col-name'
 ;; <b>1.1.1</b> &bull; improved readability in error logging, fixed binding of integers on 32-bit newlisp builds<br/>
@@ -39,11 +40,13 @@
 
 (set 'lib-paths (list
 	"/usr/lib/libsqlite3.so" ; SuSE Linux
+	"/usr/lib/libsqlite3.so.0" ; Alpine Linux
 	"/usr/local/lib/libsqlite3.so" ; Linux and BSDs
 	"/usr/pkg/lib/libsqlite3.so" ; NetBSD
 	"/usr/lib/libsqlite3.0.dylib" ; Mac OSX Darwin
 	"/usr/local/lib/libsqlite3.so" ; Solaris
 	"/usr/local/lib/libsqlite3.so.11.0" ; OpenBSD
+	"/usr/local/lib/libsqlite3.so.0" ; Just in case
 	(string (env "PROGRAMFILES") "/sqlite3/sqlite3.dll") ; Win32/MinGW
 	(string MAIN:SQLITE3_LIBRARY_PATH) ; allow user to define their own
 ))
